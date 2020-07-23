@@ -3,7 +3,11 @@ import { Link } from 'react-router-dom';
 
 // import Course from './Course';
 
-const Header = (props) => {
+export class Header extends React.PureComponent {
+  render() {
+    const { context } = this.props;
+    const authUser = context.authenticatedUser;
+
     return (
         <div id="root">
         <div>
@@ -11,15 +15,24 @@ const Header = (props) => {
             <div className="bounds">
               <h1 className="header--logo">Courses</h1>
               <nav>
-              <Link to="/signup" className="signup">Sign Up</Link>
-              <Link to="/signin" className="signin">Sign In</Link>
-
+              {authUser ?
+                  <React.Fragment>
+                    <span>Welcome, {authUser.firstName}!</span>
+                    <Link className="signout" to="/signout">Sign Out</Link>
+                  </React.Fragment>
+                :    
+                  <React.Fragment>
+                    <Link className="signup" to="/signup">Sign Up</Link>
+                    <Link className="signin" to="/signin">Sign In</Link>
+                  </React.Fragment>
+                }
               </nav>
             </div>
           </div>
         </div>
       </div>
     );
+  }
 }
 
 export default Header;

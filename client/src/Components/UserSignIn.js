@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Form from './Form';
+import { Link } from 'react-router-dom';
 
 export class UserSignIn extends Component {
     state = {
@@ -46,7 +47,7 @@ export class UserSignIn extends Component {
             )} />
                 </div>
                 <p>&nbsp;</p>
-                <p>Don't have a user account? <a href="sign-up.html">Click here</a> to sign up!</p>
+                <p>Don't have a user account? <Link to="/signup">Click here</Link> to sign up!</p>
                 </div>
             </div>
         )
@@ -65,6 +66,9 @@ export class UserSignIn extends Component {
     
       submit = () => {
         const { context } = this.props;
+        const { from } = this.props.location.state || {
+          from: { pathname: "/" },
+        };
         const { emailAddress, password } = this.state;
         context.actions.signIn(emailAddress, password)
          .then(user => {
@@ -73,8 +77,7 @@ export class UserSignIn extends Component {
                      return { errors: [ 'Sign-in was unsuccessful' ]};
                  });
              } else {
-                 this.props.history.push('/authenticated');
-                 console.log(`Success! ${emailAddress} is now signed in!`);
+                 this.props.history.push(from);
              }
          })
          .catch( err => {

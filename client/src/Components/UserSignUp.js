@@ -103,7 +103,7 @@ export class UserSignUp extends Component {
 
     submit = () => {
       const { context } = this.props;
-      console.log(context);
+
       const {
         firstName,
         lastName,
@@ -126,7 +126,10 @@ export class UserSignUp extends Component {
             if (errors.length) {
               this.setState({ errors });
             } else {
-              console.log(`${emailAddress} is successfully signed up and authenticated`);
+              context.actions.signIn(emailAddress, password)
+               .then(() => {
+                 this.props.history.push('/authenticated');
+               });
             }
           })
           .catch((err) => {

@@ -18,16 +18,21 @@ import Course from './Components/Course';
 import CourseDetail from './Components/CourseDetail';
 import UserSignIn from './Components/UserSignIn';
 import UserSignUp from './Components/UserSignUp';
+import UserSignOut from './Components/UserSignOut';
 import CreateCourse from './Components/CreateCourse';
 import UpdateCourse from './Components/UpdateCourse';
 import Authenticated from './Components/Authenticated';
 
-// Context for sharing state across the app
-
+// Imports for sharing state across the app
 import withContext from './Context';
+import PrivateRoute from './PrivateRoute';
+
+const HeaderWithContext = withContext(Header);
+const AuthWithContext = withContext(Authenticated);
 
 const UserSignUpWithContext = withContext(UserSignUp);
 const UserSignInWithContext = withContext(UserSignIn);
+const UserSignOutWithContext = withContext(UserSignOut);
 
 export class App extends Component {
 
@@ -35,7 +40,7 @@ render() {
   return (
   <BrowserRouter>
     <div className="App">
-    <Header /> 
+    <HeaderWithContext /> 
     <Switch>
       <Route exact path="/" render={ () => 
         <Redirect to="/courses" />
@@ -46,7 +51,8 @@ render() {
       <Route path="/courses/:id" component={CourseDetail} />
       <Route exact path="/signin" component={UserSignInWithContext} />
       <Route path="/signup" component={UserSignUpWithContext} />
-      <Route path="/authenticated" component={Authenticated} />
+      <Route path="/signout" component={UserSignOutWithContext} />
+      <PrivateRoute path="/authenticated" component={AuthWithContext} />
 
     </Switch>
     </div>
