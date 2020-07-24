@@ -1,8 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-// import Course from './Course';
-
 export class Header extends React.PureComponent {
   render() {
     const { context } = this.props;

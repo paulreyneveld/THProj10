@@ -33,6 +33,8 @@ const AuthWithContext = withContext(Authenticated);
 const UserSignUpWithContext = withContext(UserSignUp);
 const UserSignInWithContext = withContext(UserSignIn);
 const UserSignOutWithContext = withContext(UserSignOut);
+const CreateCourseWithContext = withContext(CreateCourse);
+const UpdateCourseWithContext = withContext(UpdateCourse);
 
 export class App extends Component {
 
@@ -46,8 +48,8 @@ render() {
         <Redirect to="/courses" />
       }/>
       <Route exact path="/courses" component={Courses}/>
-      <Route exact path="/courses/create" component={CreateCourse} />
-      <Route path="/courses/:id/update" component={UpdateCourse} />
+      <PrivateRoute exact path="/courses/create" component={CreateCourseWithContext} />
+      <Route path="/courses/:id/update" component={UpdateCourseWithContext} />
       <Route path="/courses/:id" component={CourseDetail} />
       <Route exact path="/signin" component={UserSignInWithContext} />
       <Route path="/signup" component={UserSignUpWithContext} />

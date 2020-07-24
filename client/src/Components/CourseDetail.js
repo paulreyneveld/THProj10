@@ -19,7 +19,6 @@ export class CourseDetail extends Component {
 
     componentDidMount() {
         const idParam = this.props.match.params.id;
-        console.log(idParam);
         axios.get(`http://localhost:5000/api/courses/${idParam}`)
         .then(response => {
             this.setState({
