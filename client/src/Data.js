@@ -3,7 +3,8 @@ import config from './config';
 export default class Data {
   api(path, method = 'GET', body = null, requiresAuth = false, credentials = null) {
     const url = config.apiBaseUrl + path;
-  
+    console.log(credentials.emailAddress);
+    console.log(credentials.password);
     const options = {
       method,
       headers: {
