@@ -12,6 +12,7 @@ export class Courses extends Component {
         };
     }
     
+    /*
     componentDidMount() {
         axios.get('http://localhost:5000/api/courses')
         .then(response => {
@@ -23,6 +24,22 @@ export class Courses extends Component {
           console.log('Error fetching and parsing data', error);
         });
     };
+    */
+
+   componentDidMount() {
+    const { context } = this.props;
+    context.data.getCourses()
+     .then(response => {
+       console.log(response);
+       this.setState({
+         courses: response.courses
+       });
+     })
+     .catch((err) => {
+        console.log(err);
+        this.props.history.push("/error");
+      });
+  }
 
 
 
@@ -49,7 +66,7 @@ export class Courses extends Component {
             </Link></div>
           </div>
     );
-}
+  }
 }
 
 export default Courses;

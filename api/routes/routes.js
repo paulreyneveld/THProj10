@@ -91,7 +91,8 @@ router.get('/users', authenticateUser, asyncHandler(async (req, res) => {
     res.json({
         firstName: user.firstName,
         lastName: user.lastName,
-        emailAddress: user.emailAddress
+        emailAddress: user.emailAddress,
+	userId: user.id
     });
     res.status(200).end();
 }));
@@ -191,7 +192,7 @@ router.post('/courses', authenticateUser, asyncHandler(async (req, res, next) =>
     }
 }));
 
-// PUT Creates a new course.
+// PUT Updates an existing course.
 // Implements primary error handling through vanilla JS.
 // Implements secondary error handling through sequelize validation.
 router.put('/courses/:id', authenticateUser, asyncHandler(async (req, res) => {

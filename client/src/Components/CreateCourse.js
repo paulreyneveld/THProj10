@@ -2,14 +2,17 @@ import React, { Component } from 'react';
 import Form from './Form';
 
 export default class CreateCourse extends Component {
-  state = {
-    title: '',
-    description: '',
-    estimatedTime: '',
-    materialsNeeded: '',
-    userId: '',
-    errors: [],
-  };
+  constructor() {
+    super();
+    this.state = {
+      title: '',
+      description: '',
+      estimatedTime: '',
+      materialsNeeded: '',
+      userId: '',
+      errors: []
+    };
+  }
 
   render() {
     const {
@@ -121,7 +124,6 @@ export default class CreateCourse extends Component {
 
   submit = () => {
     const { context } = this.props;
-    
     const { 
         title, 
         description, 
@@ -129,7 +131,7 @@ export default class CreateCourse extends Component {
         materialsNeeded 
     } = this.state;
 
-    const userId = context.authenticatedUser.id;
+    const userId = context.authenticatedUser.userId;
     const { emailAddress } = context.authenticatedUser;
     const password = context.password;
 
