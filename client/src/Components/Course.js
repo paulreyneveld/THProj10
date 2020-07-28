@@ -1,6 +1,5 @@
 import React from 'react';
-import { Link, Route } from 'react-router-dom';
-import CourseDetail from './CourseDetail';
+import { Link } from 'react-router-dom';
 
 const Course = (props) => {
     return (

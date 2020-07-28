@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import Form from './Form';
-import ReactMarkdown from 'react-markdown';
 
 export default class CreateCourse extends Component {
   constructor() {
     super();
     this.state = {
-      courseDetail: {},
+      title: '',
+      description: '',
+      estimatedTime: '',
+      materialsNeeded: '',
       firstName: '',
       lastName: '',
-      userID: '',
+      userId: '',
       errors: []
     };
   }
@@ -21,17 +23,20 @@ export default class CreateCourse extends Component {
      .then(response => {
        console.log(response);
        this.setState({
-        courseDetail: response,
+        title: response.title,
+        description: response.description,
+        estimatedTime: response.estimatedTime,
+        materialsNeeded: response.materialsNeeded,
         firstName: response.User.firstName,
         lastName: response.User.lastName,
-        userId: response.User.userId,
+        userId: response.User.id,
        });
      })
      .catch((err) => {
         console.log(err);
         this.props.history.push("/error");
       });
-  }
+    }
 
   render() {
     const {
@@ -39,21 +44,14 @@ export default class CreateCourse extends Component {
       description,
       estimatedTime,
       materialsNeeded,
-    } = this.state.courseDetail;
-
-    const errors = this.state.errors;
-    const firstName = this.state.firstName;
-    const lastName = this.state.lastName;
-
-    const { context } = this.props;
-    const authUser = context.authenticatedUser;
+      firstName,
+      lastName,
+      errors
+    } = this.state;
 
     return (
       <div className="bounds course--detail">
         <h1>Update Course</h1>
-
-
-
         <Form
           cancel={this.cancel}
           errors={errors}
@@ -72,7 +70,7 @@ export default class CreateCourse extends Component {
                       className="input-title course--title--input"
                       placeholder="Course title..."
                       onChange={this.change}
-                      defaultValue={title}
+                      value={title}
                     />
                   </div>
                   <p>
@@ -87,7 +85,7 @@ export default class CreateCourse extends Component {
                       className=""
                       placeholder="Course description..."
                       onChange={this.change}
-                      defaultValue={description}
+                      value={description}
                     ></textarea>
                   </div>
                 </div>
@@ -105,7 +103,7 @@ export default class CreateCourse extends Component {
                           className="course--time--input"
                           placeholder="Hours"
                           onChange={this.change}
-                          defaultValue={estimatedTime}
+                          value={estimatedTime}
                         />
                       </div>
                     </li>
@@ -118,7 +116,7 @@ export default class CreateCourse extends Component {
                           className=""
                           placeholder="List materials..."
                           onChange={this.change}
-                          defaultValue={materialsNeeded}
+                          value={materialsNeeded}
                         ></textarea>
                       </div>
                     </li>
@@ -128,13 +126,6 @@ export default class CreateCourse extends Component {
             </React.Fragment>
           )}
         />
-
-
-
-
-
-
-
       </div>
     );
   }
@@ -163,6 +154,8 @@ export default class CreateCourse extends Component {
         materialsNeeded 
     } = this.state;
 
+    console.log(title);
+    
     const userId = context.authenticatedUser.userId;
     const { emailAddress } = context.authenticatedUser;
     const password = context.password;
@@ -182,7 +175,7 @@ export default class CreateCourse extends Component {
       if (errors.length) {
         this.setState({ errors });
       } else {
-        console.log("Course created");
+        console.log("Course updated");
         this.props.history.push("/");
       }
     })

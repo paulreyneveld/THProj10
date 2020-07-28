@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './global.css';
 import './index.css';
-import axios from 'axios';
 
 // Routing import
 import {
@@ -14,7 +13,6 @@ import {
 // Component imports
 import Header from './Components/Header';
 import Courses from './Components/Courses';
-import Course from './Components/Course';
 import CourseDetail from './Components/CourseDetail';
 import UserSignIn from './Components/UserSignIn';
 import UserSignUp from './Components/UserSignUp';
@@ -22,6 +20,7 @@ import UserSignOut from './Components/UserSignOut';
 import CreateCourse from './Components/CreateCourse';
 import UpdateCourse from './Components/UpdateCourse';
 import Authenticated from './Components/Authenticated';
+import NotFound from './Components/NotFound';
 
 // Import for sharing state across the app.
 import withContext from './Context';
@@ -59,6 +58,8 @@ render() {
       <Route path="/signup" component={UserSignUpWithContext} />
       <Route path="/signout" component={UserSignOutWithContext} />
       <Route path="/authenticated" component={AuthWithContext} />
+      <Route component={NotFound} />
+
 
     </Switch>
     </div>

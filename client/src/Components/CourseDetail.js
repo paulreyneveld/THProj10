@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import ReactMarkdown from 'react-markdown';
 import { Link } from 'react-router-dom';
 
@@ -87,7 +86,7 @@ export class CourseDetail extends Component {
       if (authUser != null) {
         const courseOwner = this.state.courseDetail.userId;
         const userLoggedIn = authUser.userId;
-        if (courseOwner == userLoggedIn) {
+        if (courseOwner === userLoggedIn) {
           return(
             <div className="bounds">
             <div className="grid-100">

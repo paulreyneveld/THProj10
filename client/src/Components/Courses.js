@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Course from './Course';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 export class Courses extends Component {
@@ -11,26 +10,11 @@ export class Courses extends Component {
           courses: []
         };
     }
-    
-    /*
-    componentDidMount() {
-        axios.get('http://localhost:5000/api/courses')
-        .then(response => {
-            this.setState({
-              courses: response.data.courses
-            }); 
-        })
-        .catch(error => {
-          console.log('Error fetching and parsing data', error);
-        });
-    };
-    */
 
    componentDidMount() {
     const { context } = this.props;
     context.data.getCourses()
      .then(response => {
-       console.log(response);
        this.setState({
          courses: response.courses
        });
@@ -40,8 +24,6 @@ export class Courses extends Component {
         this.props.history.push("/error");
       });
   }
-
-
 
    render() {
 
