@@ -3,30 +3,30 @@ import Course from './Course';
 import { Link } from 'react-router-dom';
 
 export class Courses extends Component {
+  constructor() {
+      super();
+      this.state = {
+        courses: []
+      };
+  }       
 
-    constructor() {
-        super();
-        this.state = {
-          courses: []
-        };
-    }
-
-   componentDidMount() {
-    const { context } = this.props;
-    context.data.getCourses()
-     .then(response => {
-       this.setState({
-         courses: response.courses
-       });
-     })
-     .catch((err) => {
-        console.log(err);
-        this.props.history.push("/error");
+  // Obtains relevant information from the API via context.
+  componentDidMount() {
+  const { context } = this.props;
+  context.data.getCourses()
+    .then(response => {
+      this.setState({
+        courses: response.courses
       });
+    })
+    .catch((err) => {
+      console.log(err);
+      this.props.history.push("/error");
+    });
   }
-
-   render() {
-
+  
+  // Displays list of courses via the course component.
+  render() {
     const results = this.state.courses;
     const courses = results.map(course => 
         <Course 

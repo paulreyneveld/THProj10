@@ -2,43 +2,52 @@ import React, { Component } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Link } from 'react-router-dom';
 
-
-// import Photo from './Photo'
-
 export class CourseDetail extends Component {
     constructor() {
         super();
         this.state = {
-          courseDetail: {},
+          title: '',
+          description: '',
+          estimatedTime: '',
+          materialsNeeded: '',
           firstName: '',
           lastName: '',
           userId: ''
         };
     }
-
+    
+    // Obtains relevant information from the API via context.
     componentDidMount() {
       const { context } = this.props;
       const courseId = this.props.match.params.id;
       context.data.courseDetail(courseId)
        .then(response => {
          this.setState({
-          courseDetail: response,
+          title: response.title,
+          description: response.description,
+          estimatedTime: response.estimatedTime,
+          materialsNeeded: response.materialsNeeded,
           firstName: response.User.firstName,
           lastName: response.User.lastName,
-          userId: response.User.userId
+          userId: response.User.id
          });
        })
        .catch((err) => {
           console.log(err);
           this.props.history.push("/error");
         });
-    }
-
+      }
+    
+    // Displays the course details.
     render() {
-
-        const courseObject = this.state.courseDetail;
-        const firstName = this.state.firstName;
-        const lastName = this.state.lastName;
+      const {
+        title,
+        description,
+        estimatedTime,
+        materialsNeeded,
+        firstName,
+        lastName,
+      } = this.state;
 
         return (
         <div>
@@ -49,11 +58,11 @@ export class CourseDetail extends Component {
           <div className="grid-66">
             <div className="course--header">
               <h4 className="course--label">Course</h4>
-              <h3 className="course--title">{courseObject.title}</h3>
+              <h3 className="course--title">{title}</h3>
               <p>By {`${firstName} ${lastName}`} </p>
             </div>
             <div className="course--description">
-                <ReactMarkdown>{courseObject.description}</ReactMarkdown>           
+                <ReactMarkdown>{description}</ReactMarkdown>           
             </div>
           </div>
           <div className="grid-25 grid-right">
@@ -61,12 +70,12 @@ export class CourseDetail extends Component {
               <ul className="course--stats--list">
                 <li className="course--stats--list--item">
                   <h4>Estimated Time</h4>
-                  <h3>{courseObject.estimatedTime}</h3>
+                  <h3>{estimatedTime}</h3>
                 </li>
                 <li className="course--stats--list--item">
                   <h4>Materials Needed</h4>
                   <ul>
-                    <ReactMarkdown>{courseObject.materialsNeeded}</ReactMarkdown>
+                    <ReactMarkdown>{materialsNeeded}</ReactMarkdown>
                   </ul>
                 </li>
               </ul>
@@ -77,6 +86,7 @@ export class CourseDetail extends Component {
         );
     }
 
+    // Function that gives granular access to menu features based on user auth.
     menuPermissions = () => {
       const { context } = this.props;
       const authUser = context.authenticatedUser;
@@ -84,7 +94,7 @@ export class CourseDetail extends Component {
 
 
       if (authUser != null) {
-        const courseOwner = this.state.courseDetail.userId;
+        const courseOwner = this.state.userId;
         const userLoggedIn = authUser.userId;
         if (courseOwner === userLoggedIn) {
           return(
@@ -126,6 +136,7 @@ export class CourseDetail extends Component {
       }
     }
 
+    // Function that sends a delete request to the server based on the selected course (courseId).
     deleteCourse = () => {
       const { context } = this.props;
       const emailAddress = context.authenticatedUser.emailAddress;

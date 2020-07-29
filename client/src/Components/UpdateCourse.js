@@ -15,13 +15,13 @@ export default class CreateCourse extends Component {
       errors: []
     };
   }
-
+  
+  // Obtains relevant information from the API via context.
   componentDidMount() {
     const { context } = this.props;
     const courseId = this.props.match.params.id;
     context.data.courseDetail(courseId)
      .then(response => {
-       console.log(response);
        this.setState({
         title: response.title,
         description: response.description,
@@ -37,7 +37,8 @@ export default class CreateCourse extends Component {
         this.props.history.push("/error");
       });
     }
-
+  
+  // Displays the update form via generic form component.
   render() {
     const {
       title,
@@ -130,10 +131,7 @@ export default class CreateCourse extends Component {
     );
   }
 
-  /**
-   * A function that takes the user's input values and assigns it to the appropriate state property
-   * @param {string} event - The user's input values
-   */
+  // Function that updates state when user's change the input.
   change = (event) => {
     const name = event.target.name;
     const value = event.target.value;
@@ -145,6 +143,7 @@ export default class CreateCourse extends Component {
     });
   };
 
+  // Function that wraps the updated state (course info) and sends it to the server for processing. 
   submit = () => {
     const { context } = this.props;
     const { 
@@ -153,8 +152,6 @@ export default class CreateCourse extends Component {
         estimatedTime, 
         materialsNeeded 
     } = this.state;
-
-    console.log(title);
     
     const userId = context.authenticatedUser.userId;
     const { emailAddress } = context.authenticatedUser;
@@ -183,10 +180,9 @@ export default class CreateCourse extends Component {
       console.log(err);
       this.props.history.push("/error");
     });
-
-    
   };
 
+  // Function that cancels the update and returns to the main page. 
   cancel = () => {
     this.props.history.push("/");
   };

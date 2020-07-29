@@ -9,6 +9,7 @@ export class UserSignIn extends Component {
         errors: [],
     }
 
+    // Displays user sign in form.
     render() {
         const {
             emailAddress,
@@ -18,31 +19,31 @@ export class UserSignIn extends Component {
 
         return (
             <div className="bounds">
-                <div className="grid-33 centered signin">
+              <div className="grid-33 centered signin">
                 <h1>Sign In</h1>
                 <div>
                 <Form 
-            cancel={this.cancel}
-            errors={errors}
-            submit={this.submit}
-            submitButtonText="Sign In"
-            elements={() => (
-              <React.Fragment>
-                <input 
-                  id="emailAddress" 
-                  name="emailAddress" 
-                  type="text"
-                  value={emailAddress} 
-                  onChange={this.change} 
-                  placeholder="Email Address" />
-                <input 
-                  id="password" 
-                  name="password"
-                  type="password"
-                  value={password} 
-                  onChange={this.change} 
-                  placeholder="Password" />                
-              </React.Fragment>
+                  cancel={this.cancel}
+                  errors={errors}
+                  submit={this.submit}
+                  submitButtonText="Sign In"
+                  elements={() => (
+                    <React.Fragment>
+                      <input 
+                        id="emailAddress" 
+                        name="emailAddress" 
+                        type="text"
+                        value={emailAddress}
+                        onChange={this.change} 
+                        placeholder="Email Address" />
+                      <input 
+                        id="password" 
+                        name="password"
+                        type="password"
+                        value={password}
+                        onChange={this.change} 
+                        placeholder="Password" />                
+                    </React.Fragment>
             )} />
                 </div>
                 <p>&nbsp;</p>
@@ -51,7 +52,8 @@ export class UserSignIn extends Component {
             </div>
         )
     }
-
+    
+    // Function that updates state when users change the input.
     change = (event) => {
         const name = event.target.name;
         const value = event.target.value;
@@ -62,32 +64,42 @@ export class UserSignIn extends Component {
           };
         });
       }
-    
-      submit = () => {
-        const { context } = this.props;
-        const { from } = this.props.location.state || {
-          from: { pathname: "/" },
-        };
-        const { emailAddress, password } = this.state;
+
+    // Function that wraps the updated and validated state and uses is to obtain
+    // user authorization. 
+    submit = () => {
+      const { context } = this.props;
+      const { from } = this.props.location.state || {
+        from: { pathname: "/" },
+      };
+
+      const { emailAddress, password } = this.state;
+      if (emailAddress === '' || password === '') {
+        this.setState(() => {
+          return { errors: [ 'Sign-in was unsuccessful' ]};
+        })
+      } else {
         context.actions.signIn(emailAddress, password)
-         .then(user => {
-             if (user === null) {
-                 this.setState(() => {
-                     return { errors: [ 'Sign-in was unsuccessful' ]};
-                 });
-             } else {
-                 this.props.history.push(from);
-             }
-         })
-         .catch( err => {
-             console.log(err);
-             this.props.history.push('/error');
-         })
+        .then(user => {
+            if (user === null) {
+                this.setState(() => {
+                    return { errors: [ 'Sign-in was unsuccessful' ]};
+                });
+            } else {
+                this.props.history.push(from);
+            }
+        })
+        .catch( err => {
+            console.log(err);
+            this.props.history.push('/error');
+        })
       }
-    
-      cancel = () => {
-        this.props.history.push('/');
-      }
+    }
+
+    // Function that cancels the update and returns to the main page. 
+    cancel = () => {
+      this.props.history.push('/');
+    }
 }
 
 export default UserSignIn;

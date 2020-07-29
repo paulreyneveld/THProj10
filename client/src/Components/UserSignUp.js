@@ -13,6 +13,7 @@ export class UserSignUp extends Component {
       errors: [],
     }
 
+    // Displays a user sign up form via generic form component. 
     render() {
       const {
         firstName,
@@ -90,6 +91,7 @@ export class UserSignUp extends Component {
         )
     }
 
+    // Function that updates state when user's change the input.
     change = (event) => {
       const name = event.target.name;
       const value = event.target.value;
@@ -101,6 +103,7 @@ export class UserSignUp extends Component {
       });
     }
 
+    // Function that wraps the updated state (new user info) and sends it to the server for processing.
     submit = () => {
       const { context } = this.props;
 
@@ -112,7 +115,6 @@ export class UserSignUp extends Component {
         confirmPassword
       } = this.state;
   
-      // Create user
       const user = {
         firstName,
         lastName,
@@ -128,7 +130,7 @@ export class UserSignUp extends Component {
             } else {
               context.actions.signIn(emailAddress, password)
                .then(() => {
-                 this.props.history.push('/authenticated');
+                 this.props.history.push('/');
                });
             }
           })
@@ -142,7 +144,7 @@ export class UserSignUp extends Component {
       }
         
     }
-
+    // Function that cancels the update and returns to the main page.
     cancel = () => {
       this.props.history.push('/');
     }

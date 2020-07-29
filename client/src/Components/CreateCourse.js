@@ -14,6 +14,7 @@ export default class CreateCourse extends Component {
     };
   }
 
+  // Displays the create course form. 
   render() {
     const {
       title,
@@ -106,11 +107,8 @@ export default class CreateCourse extends Component {
       </div>
     );
   }
-
-  /**
-   * A function that takes the user's input values and assigns it to the appropriate state property
-   * @param {string} event - The user's input values
-   */
+  
+  // Function that updates state when users change the input.
   change = (event) => {
     const name = event.target.name;
     const value = event.target.value;
@@ -121,7 +119,9 @@ export default class CreateCourse extends Component {
       };
     });
   };
-
+  
+  // Function that wraps the updated state and sends it to the server for 
+  // the purpose of validated course creation. 
   submit = () => {
     const { context } = this.props;
     const { 
@@ -158,7 +158,8 @@ export default class CreateCourse extends Component {
         this.props.history.push("/error");
       });
   };
-
+  
+  // Function that cancels the update and returns to the main page. 
   cancel = () => {
     this.props.history.push("/");
   };

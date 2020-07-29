@@ -1,5 +1,5 @@
 import React from 'react';
-
+// Generic form processing component. 
 export default (props) => {
   const {
     cancel,
@@ -9,16 +9,19 @@ export default (props) => {
     elements,
   } = props;
 
+  // Subverts default behavior for submit() function provided by parent component. 
   function handleSubmit(event) {
     event.preventDefault();
     submit();
   }
 
+  // Subverts default behavior for cancel() function provided by parent component. 
   function handleCancel(event) {
     event.preventDefault();
     cancel();
   }
-
+  
+  // Displays the form based on parent specifications. 
   return (
     <div>
       <ErrorsDisplay errors={errors} />
@@ -33,6 +36,8 @@ export default (props) => {
   );
 }
 
+// Generic wrapper for errors to be displayed should they propagate
+// from the server. 
 function ErrorsDisplay({ errors }) {
   let errorsDisplay = null;
 

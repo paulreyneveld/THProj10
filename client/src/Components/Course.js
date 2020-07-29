@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Course = (props) => {
+    // Returns individual courses for display
     return (
         <div className="grid-33">
         <Link to={"/courses/" + props.id} className="course--module course--link" >
