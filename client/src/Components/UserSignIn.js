@@ -72,8 +72,8 @@ export class UserSignIn extends Component {
       const { from } = this.props.location.state || {
         from: { pathname: "/" },
       };
-
       const { emailAddress, password } = this.state;
+
       if (emailAddress === '' || password === '') {
         this.setState(() => {
           return { errors: [ 'Sign-in was unsuccessful' ]};

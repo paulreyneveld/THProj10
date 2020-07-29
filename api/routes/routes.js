@@ -58,7 +58,7 @@ const authenticateUser = async (req, res, next) => {
         });
         if (user) {
             const authenticated = bcryptjs
-            .compareSync(credentials.pass, user.password);
+             .compareSync(credentials.pass, user.password);
             console.log(authenticated);
             if (authenticated) {
                 req.currentUser = user;
@@ -78,7 +78,7 @@ const authenticateUser = async (req, res, next) => {
 
     if (message) {
         console.warn(message);
-        res.status(401).json({ message: 'Access Denied' });
+        res.status(401).json({ message: message });
     }
     else {
         next();
