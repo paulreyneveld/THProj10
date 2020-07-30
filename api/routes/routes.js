@@ -51,11 +51,14 @@ const authenticateUser = async (req, res, next) => {
     const credentials = auth(req);
 
     if (credentials) {
+
         const user = await User.findOne({
             where: {
                 emailAddress: credentials.name
             },
-        });
+        }).catch(err => console.log(err));
+
+        
         if (user) {
             const authenticated = bcryptjs
              .compareSync(credentials.pass, user.password);
@@ -69,7 +72,7 @@ const authenticateUser = async (req, res, next) => {
             }
         }
         else {
-            message = `User not found for username: ${user.emailAddress}`;
+            message = `User not found.`;
         }
     }
     else {
