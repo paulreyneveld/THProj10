@@ -182,8 +182,9 @@ export default class CreateCourse extends Component {
     });
   };
 
-  // Function that cancels the update and returns to the main page. 
+  // Function that cancels the update and returns to the course detail page. 
   cancel = () => {
-    this.props.history.push("/");
+    const courseId = this.props.match.params.id;
+    this.props.history.push(`/courses/${courseId}`);
   };
 }

@@ -1,15 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-export class Header extends React.PureComponent {
+const Header = ({ context }) => {
   
   // Displays modular header across the app with 
   // rendering logic based on user auth.  
-  render() {
-    const { context } = this.props;
     const authUser = context.authenticatedUser;
-
-    
+        
     return (
         <div id="root">
         <div>
@@ -35,7 +32,7 @@ export class Header extends React.PureComponent {
       </div>
     );
   }
-}
+
 
 export default Header;
 
