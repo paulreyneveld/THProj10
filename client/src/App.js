@@ -19,8 +19,9 @@ import UserSignUp from './Components/UserSignUp';
 import UserSignOut from './Components/UserSignOut';
 import CreateCourse from './Components/CreateCourse';
 import UpdateCourse from './Components/UpdateCourse';
-// import Authenticated from './Components/Authenticated';
 import NotFound from './Components/NotFound';
+import Forbidden from './Components/Forbidden';
+import UnhandledError from './Components/UnhandledError';
 
 // Import for sharing state across the app.
 import withContext from './Context';
@@ -58,6 +59,8 @@ render() {
       <Route  path="/signin" component={UserSignInWithContext} />
       <Route path="/signup" component={UserSignUpWithContext} />
       <Route path="/signout" component={UserSignOutWithContext} />
+      <Route path="/forbidden" component={Forbidden} />
+      <Route path="/error" component={UnhandledError} />
       <Route component={NotFound} />
       
     </Switch>

@@ -20,6 +20,7 @@ export default class CreateCourse extends Component {
   componentDidMount() {
     const { context } = this.props;
     const courseId = this.props.match.params.id;
+    const authUser = context.authenticatedUser;
     context.data.courseDetail(courseId)
      .then(response => {
        this.setState({
@@ -31,12 +32,23 @@ export default class CreateCourse extends Component {
         lastName: response.User.lastName,
         userId: response.User.id,
        });
+       // Prevents unauthorized users from editing data. 
+       if (authUser !== null) {
+         const courseOwner = this.state.userId;
+         const userLoggedIn = authUser.userId;
+         if (courseOwner !== userLoggedIn) {
+           this.props.history.push("/forbidden");
+         }
+       }
      })
      .catch((err) => {
         console.log(err);
         this.props.history.push("/error");
       });
     }
+
+
+    
   
   // Displays the update form via generic form component.
   render() {
@@ -83,7 +95,6 @@ export default class CreateCourse extends Component {
                     <textarea
                       id="description"
                       name="description"
-                      className=""
                       placeholder="Course description..."
                       onChange={this.change}
                       value={description}
