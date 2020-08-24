@@ -149,7 +149,6 @@ export class CourseDetail extends Component {
         if (errors.length) {
           this.setState({ errors });
         } else {
-          console.log("Course Deleted");
           this.props.history.push("/");
         }
       })
